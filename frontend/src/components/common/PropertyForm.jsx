@@ -81,17 +81,16 @@ const PropertyForm = () => {
             {...register("price", {
               required: "Price is required",
               pattern: {
-                value: /^\d{1,3}(,\d{3})*(\.\d{1,2})?$/,
-                message: "Enter a valid price (e.g., 1,000.00)",
+                value: /^\d+(\.\d{1,2})?\sCr(\s-\s\d+(\.\d{1,2})?\sCr)?$/,
+                message:
+                  "Enter a valid price (e.g., 2.25 Cr or 2.25 Cr - 3.00 Cr)",
               },
               onChange: (e) => {
-                e.target.value = e.target.value.replace(
-                  /\B(?=(\d{3})+(?!\d))/g,
-                  ","
-                );
+                // Optionally, format input as the user types
+                e.target.value = e.target.value.replace(/\s+/g, " ").trim(); // Normalize whitespace
               },
             })}
-            placeholder="Enter price"
+            placeholder="Enter price (e.g., 2.25 Cr or 2.25 Cr - 3.00 Cr)"
           />
           {errors.price && (
             <p className="text-red-500 text-sm mt-1">{errors.price.message}</p>
@@ -191,7 +190,7 @@ const PropertyForm = () => {
         {/* Carpet Area */}
         <div>
           <label className="block mb-2 text-sm font-medium text-gray-700">
-            Carpet Area (in sq.ft.)
+            Carpet Area (in Sqft)
           </label>
           <input
             type="text"
@@ -199,18 +198,15 @@ const PropertyForm = () => {
             {...register("carpet_area", {
               required: "Carpet area is required",
               pattern: {
-                value: /^\d{1,3}(,\d{3})*(-\d{1,3}(,\d{3})*)?$/,
-                message:
-                  "Enter a valid carpet area (e.g., 1,000 or 1,000-1,500)",
+                value: /^\d+(\s+Sqft)?$/,
+                message: "Enter a valid carpet area (e.g., 1950 Sqft)",
               },
               onChange: (e) => {
-                e.target.value = e.target.value.replace(
-                  /\B(?=(\d{3})+(?!\d))/g,
-                  ","
-                );
+                // Optionally, you can format the input on change
+                e.target.value = e.target.value.replace(/\s+/g, " ").trim(); // Normalize whitespace
               },
             })}
-            placeholder="Enter carpet area (e.g., 1,000 or 1,000-1,500)"
+            placeholder="Enter carpet area (e.g., 1950 Sqft)"
           />
           {errors.carpet_area && (
             <p className="text-red-500 text-sm mt-1">
@@ -257,6 +253,52 @@ const PropertyForm = () => {
           {errors.bathrooms && (
             <p className="text-red-500 text-sm mt-1">
               {errors.bathrooms.message}
+            </p>
+          )}
+        </div>
+
+        {/* Status */}
+        <div>
+          <label className="block mb-2 text-sm font-medium text-gray-700">
+            Status
+          </label>
+          <select
+            className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+            {...register("status", {
+              required: "Status is required",
+            })}
+          >
+            {["Under Construction", "ReSell", "Ready to Move"].map((status) => (
+              <option key={status} value={status}>
+                {status}
+              </option>
+            ))}
+          </select>
+          {errors.status && (
+            <p className="text-red-500 text-sm mt-1">{errors.status.message}</p>
+          )}
+        </div>
+
+        {/* Possession */}
+        <div>
+          <label className="block mb-2 text-sm font-medium text-gray-700">
+            Possession
+          </label>
+          <input
+            className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+            {...register("possession", {
+              required: "Possession date is required",
+              pattern: {
+                value:
+                  /^(January|February|March|April|May|June|July|August|September|October|November|December)-\d{4}$/,
+                message: "Enter a valid possession date (e.g., June-2024)",
+              },
+            })}
+            placeholder="Enter possession date (e.g., June-2024)"
+          />
+          {errors.possession && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.possession.message}
             </p>
           )}
         </div>

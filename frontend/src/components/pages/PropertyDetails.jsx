@@ -12,7 +12,6 @@ import Image2 from "../../assets/2.webp";
 import Image3 from "../../assets/3.webp";
 
 function PropertyDetails() {
-
   // Carousel settings
   const carouselSettings = {
     dots: true,
@@ -23,7 +22,7 @@ function PropertyDetails() {
   };
 
   const { GET_PROPERTYDATA_BY_ID } = propertyApi;
-  
+
   const { property_id } = useParams();
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -31,9 +30,11 @@ function PropertyDetails() {
   useEffect(() => {
     const fetchPropertyDetails = async () => {
       try {
-        const response = await axios.get(`${GET_PROPERTYDATA_BY_ID}${property_id}`);
-        setProperty(response.data);
+        const response = await axios.get(
+          GET_PROPERTYDATA_BY_ID.replace(":id", property_id)
+        );
         console.log(response.data)
+        setProperty(response.data);
       } catch (error) {
         console.error("Error fetching property details:", error);
       } finally {
@@ -47,50 +48,35 @@ function PropertyDetails() {
   if (loading) return <p>Loading property details...</p>;
   if (!property) return <p>Property not found.</p>;
 
-  const featuredProperties = [
-    {
-      title: "Light and Modern House",
-      location: "Austin, TX",
-      image: Image1,
-    },
-    {
-      title: "Luxury Villa",
-      location: "Bhubaneswar",
-      image: Image2,
-    },
-    {
-      title: "Modern Family House",
-      location: "New York, NY",
-      image: Image3,
-    },
-    {
-      title: "Modern Family House",
-      location: "New York, NY",
-      image: Image3,
-    },
-  ];
+  const {
+    address,
+    amenities,
+    availability_status,
+    bathrooms,
+    bedrooms,
+    carpet_area,
+    configuration,
+    description,
+    featured_image,
+    furnishing,
+    location,
+    price,
+    property_type,
+    title,
+    possession,
+    status,
+  } = property;
 
-  const amenitiesList = [
-    "Air Conditioning",
-    "Gym",
-    "Laundry",
-    "Shared Gym",
-    "Kitchen Appliances",
-    "Outdoor Shower",
-    "Two Refrigerators",
-    "Club House",
-    "TV Cable",
-    "Washer",
-  ];
+  const amenitiesArray = amenities || [];
 
   return (
     <div className="container mx-auto p-4 max-w-[1500px] font-primary">
       {/* Property Header */}
       <div className="flex flex-col lg:flex-row justify-between items-center p-4 bg-white shadow">
         <div>
-          <h1 className="text-2xl font-bold">Light and Modern House</h1>
+          <h1 className="text-2xl font-bold">{title}</h1>
           <p className="text-gray-600 flex items-center">
-            <span className="material-icons mr-1">location_on</span> Austin, TX
+            <span className="material-icons mr-1">location_on</span> {location}
           </p>
         </div>
         <div className="text-3xl font-bold text-green-600">$4,500/mo</div>
@@ -103,7 +89,11 @@ function PropertyDetails() {
           {/* Image Carousel */}
           <Slider {...carouselSettings} className="my-6">
             <div>
-              <img src={Image1} alt="House 1" className="w-full object-cover " />
+              <img
+                src={Image1}
+                alt="House 1"
+                className="w-full object-cover "
+              />
             </div>
             <div>
               <img src={Image2} alt="House 2" className="w-full object-cover" />
@@ -115,66 +105,73 @@ function PropertyDetails() {
 
           {/* Property Overview */}
           <div className="p-4 rounded-lg shadow">
-            <h2 className="bg-gray-100 text-xl font-medium mb-4 p-3 rounded-lg">Overview</h2>
+            <h2 className="bg-gray-100 text-xl font-medium mb-4 p-3 rounded-lg">
+              Overview
+            </h2>
             <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
               <div>
-                <strong>Property Type</strong> <br /> Apartment
+                <strong>Property Type</strong> <br /> {property_type}
               </div>
               <div>
-                <strong>Status</strong> <br /> Under Construction
+                <strong>Status</strong> <br /> {status}
               </div>
               <div>
-                <strong>Area</strong> <br /> 1950 Sqft
+                <strong>Area</strong> <br /> {carpet_area}
               </div>
               <div>
-                <strong>Bedrooms</strong> <br /> 6
+                <strong>Bedrooms</strong> <br /> {bedrooms}
               </div>
               <div>
-                <strong>Bathrooms</strong> <br /> 3
+                <strong>Bathrooms</strong> <br /> {bathrooms}
               </div>
             </div>
           </div>
 
           {/* Property Description */}
           <div className="mt-8 bg-white p-6 shadow rounded-lg">
-            <h2 className="text-xl font-medium mb-4 bg-gray-100 rounded-lg p-3">Description</h2>
-            <p className="text-gray-700">
-              Lorem ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry’s standard dummy text
-              ever since the 1500s.
-            </p>
+            <h2 className="text-xl font-medium mb-4 bg-gray-100 rounded-lg p-3">
+              Description
+            </h2>
+            <p className="text-gray-700">{description}</p>
           </div>
 
           {/* Property Details */}
           <div className="mt-8 bg-white p-6 shadow rounded-lg">
-            <h2 className="text-xl font-medium mb-4 bg-gray-100 rounded-lg p-3">Details</h2>
+            <h2 className="text-xl font-medium mb-4 bg-gray-100 rounded-lg p-3">
+              Details
+            </h2>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <div>
-                <strong>Price:</strong> 2.25 Cr
+                <strong>Price:</strong> {price}
               </div>
               <div>
-                <strong>Configuration:</strong> 3 BHK, 4 BHK
+                <strong>Configuration:</strong> {configuration}
               </div>
               <div>
-                <strong>Possession:</strong> June-2024
+                <strong>Possession:</strong> {possession}
               </div>
               <div>
                 <strong>Floor:</strong> 1 (Out of 12)
               </div>
               <div>
-                <strong>Address:</strong> Bhubaneswar
+                <strong>Address:</strong> {address}
               </div>
               <div>
-                <strong>Furnishing:</strong> Unfurnished
+                <strong>Furnishing:</strong> {furnishing}
+              </div>
+              <div>
+                <strong>Availability Status:</strong> {availability_status}
               </div>
             </div>
           </div>
 
           {/* Amenities */}
           <div className="bg-white p-6 mt-8 shadow rounded-lg">
-            <h2 className="text-xl font-medium mb-4 bg-gray-100 rounded-lg p-3">Amenities</h2>
+            <h2 className="text-xl font-medium mb-4 bg-gray-100 rounded-lg p-3">
+              Amenities
+            </h2>
             <ul className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-              {amenitiesList.map((amenity, index) => (
+              {amenitiesArray.map((amenity, index) => (
                 <li key={index} className="flex items-center">
                   <span className="material-icons text-green-500 mr-2">
                     <FaCheckCircle />
@@ -219,7 +216,7 @@ function PropertyDetails() {
       </div>
 
       {/* Featured Listings */}
-      <div className="mt-8">
+      {/* <div className="mt-8">
         <h2 className="text-xl font-medium mb-4">Featured Listings</h2>
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
           {featuredProperties.map((property, index) => (
@@ -234,7 +231,7 @@ function PropertyDetails() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -70,7 +70,7 @@ const PropertySchema = new mongoose.Schema({
     required: true,
   },
   amenities: {
-    type: String,
+    type: [String],
     enum: [
       "Swimming Pool",
       "Fitness Center",
@@ -118,8 +118,17 @@ const PropertySchema = new mongoose.Schema({
     enum: ["Fully Furnished", "Semi Furnished", "Unfurnished"],
     required: true,
   },
-  gallery: {
+  status: {
     type: String,
+    enum: ["Under Construction", "ReSell", "Ready to Move"],
+    required: true,
+  },
+  possession: {
+    type: String,
+    required: true,
+  },
+  gallery: {
+    type: [String],
   },
   date_posted: {
     type: Date,
