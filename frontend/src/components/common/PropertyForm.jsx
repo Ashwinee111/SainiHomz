@@ -10,12 +10,22 @@ const PropertyForm = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm();
 
   const onSubmit = async (data) => {
+    // Process the amenities input to create an array
+    const amenitiesArray = data.amenities.split(",").map((item) => item.trim());
+
+    // Create the final data object to send to the API
+    const propertyData = {
+      ...data,
+      amenities: amenitiesArray, // Update the amenities field to be an array
+    };
+
     try {
-      const response = await axios.post(POST_PROPERTYDATA, data);
+      const response = await axios.post(POST_PROPERTYDATA, propertyData);
 
       if (response.status === 201) {
         toast.success("Property submitted successfully!");
@@ -86,8 +96,10 @@ const PropertyForm = () => {
                   "Enter a valid price (e.g., 2.25 Cr or 2.25 Cr - 3.00 Cr)",
               },
               onChange: (e) => {
-                // Optionally, format input as the user types
-                e.target.value = e.target.value.replace(/\s+/g, " ").trim(); // Normalize whitespace
+                // Allow only numbers, periods, hyphens, and spaces
+                e.target.value = e.target.value
+                  .replace(/[^0-9.\-\sCr]/g, "")
+                  .replace(/\s+/g, " "); // Normalize whitespace
               },
             })}
             placeholder="Enter price (e.g., 2.25 Cr or 2.25 Cr - 3.00 Cr)"
@@ -190,7 +202,7 @@ const PropertyForm = () => {
         {/* Carpet Area */}
         <div>
           <label className="block mb-2 text-sm font-medium text-gray-700">
-            Carpet Area (in Sqft)
+            Carpet Area
           </label>
           <input
             type="text"
@@ -198,15 +210,19 @@ const PropertyForm = () => {
             {...register("carpet_area", {
               required: "Carpet area is required",
               pattern: {
-                value: /^\d+(\s+Sqft)?$/,
-                message: "Enter a valid carpet area (e.g., 1950 Sqft)",
+                value: /^\d+(\s*-\s*\d+)?$/, // Allows only numbers and optional hyphen for range
+                message:
+                  "Enter a valid carpet area (e.g., 1950 or 1000 - 2000)",
               },
               onChange: (e) => {
-                // Optionally, you can format the input on change
-                e.target.value = e.target.value.replace(/\s+/g, " ").trim(); // Normalize whitespace
+                // Allow only numbers, spaces, and hyphens
+                e.target.value = e.target.value
+                  .replace(/[^0-9\s-]/g, "") // Remove any characters that are not numbers, spaces, or hyphens
+                  .replace(/\s+/g, " ") // Normalize multiple spaces to a single space
+                  .trim(); // Remove leading/trailing spaces
               },
             })}
-            placeholder="Enter carpet area (e.g., 1950 Sqft)"
+            placeholder="Enter carpet area (e.g., 1950 or 1000 - 2000)"
           />
           {errors.carpet_area && (
             <p className="text-red-500 text-sm mt-1">
@@ -293,6 +309,27 @@ const PropertyForm = () => {
                   /^(January|February|March|April|May|June|July|August|September|October|November|December)-\d{4}$/,
                 message: "Enter a valid possession date (e.g., June-2024)",
               },
+              onChange: (e) => {
+                // Allow letters, numbers, and hyphens for manual entry
+                e.target.value = e.target.value
+                  .replace(/[^a-zA-Z0-9-]/g, "") // Allow letters, numbers, and hyphens
+                  .replace(/([a-zA-Z]+)-/g, "$1-") // Normalize spacing around the hyphen
+                  .trim(); // Remove leading/trailing spaces
+              },
+              onBlur: (e) => {
+                // Validate the format on blur
+                const value = e.target.value;
+                if (
+                  !/^(January|February|March|April|May|June|July|August|September|October|November|December)-\d{4}$/.test(
+                    value
+                  )
+                ) {
+                  setError("possession", {
+                    type: "manual",
+                    message: "Enter a valid possession date (e.g., June-2024)",
+                  });
+                }
+              },
             })}
             placeholder="Enter possession date (e.g., June-2024)"
           />
@@ -306,49 +343,14 @@ const PropertyForm = () => {
         {/* Amenities */}
         <div>
           <label className="block mb-2 text-sm font-medium text-gray-700">
-            Amenities
+            Amenities (comma-separated)
           </label>
-          <select
+          <input
+            type="text"
             className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
             {...register("amenities", { required: "Amenities are required" })}
-          >
-            {[
-              "Swimming Pool",
-              "Fitness Center",
-              "Clubhouse/Community Room",
-              "Private Balcony/Terrace",
-              "Pet-Friendly Facilities",
-              "Parking Garage or Assigned Parking",
-              "Smart Home Technology",
-              "On-site Laundry or In-unit Washer/Dryer",
-              "Security Systems",
-              "Playground/Kid's Play Area",
-              "Green Spaces/Landscaped Gardens",
-              "Walking/Biking Trails",
-              "Rooftop Deck",
-              "Business Center/Co-working Spaces",
-              "High-speed Internet Access",
-              "Concierge Service",
-              "Fireplace",
-              "Outdoor Grilling Stations",
-              "Spa/Wellness Center",
-              "Storage Space",
-              "Basketball/Tennis Courts",
-              "Movie Theater/Media Room",
-              "Conference Rooms/Meeting Spaces",
-              "Elevators",
-              "Cafeteria or Food Court",
-              "Bike Storage",
-              "Electric Vehicle Charging Stations",
-              "24/7 Maintenance",
-              "HVAC Systems",
-              "Retail or On-site Shops",
-            ].map((amenity) => (
-              <option key={amenity} value={amenity}>
-                {amenity}
-              </option>
-            ))}
-          </select>
+            placeholder="Enter amenities (e.g., Gym, Pool, Parking)"
+          />
           {errors.amenities && (
             <p className="text-red-500 text-sm mt-1">
               {errors.amenities.message}

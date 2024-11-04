@@ -28,14 +28,14 @@ const PropertyCard = ({
           <p className="text-lg font-bold text-primary">₹{price}</p>
         </div>
         <div className="mt-4 flex justify-between text-gray-600 text-sm gap-2">
-          <span className="flex justify-center items-center gap-2 font-medium text-base">
-            <BiArea size={25} color="bg-primary" /> {carpet_area} Sq Ft
+          <span className="flex justify-center items-center gap-2 font-medium text-sm">
+            <BiArea size={22} color="bg-primary" /> {carpet_area} Sq Ft
           </span>
-          <span className="flex justify-center items-center gap-2 font-medium text-base">
-            <LuBedSingle size={25} color="bg-primary" /> {bedrooms} Beds
+          <span className="flex justify-center items-center gap-2 font-medium text-sm">
+            <LuBedSingle size={22} color="bg-primary" /> {bedrooms} Beds
           </span>
-          <span className="flex justify-center items-center gap-2 font-medium text-base">
-            <LiaBathSolid size={25} color="bg-primary" /> {bathrooms} Baths
+          <span className="flex justify-center items-center gap-2 font-medium text-sm">
+            <LiaBathSolid size={22} color="bg-primary" /> {bathrooms} Baths
           </span>
         </div>
       </div>

@@ -33,7 +33,7 @@ function PropertyDetails() {
         const response = await axios.get(
           GET_PROPERTYDATA_BY_ID.replace(":id", property_id)
         );
-        console.log(response.data)
+        console.log(response.data);
         setProperty(response.data);
       } catch (error) {
         console.error("Error fetching property details:", error);
@@ -116,7 +116,7 @@ function PropertyDetails() {
                 <strong>Status</strong> <br /> {status}
               </div>
               <div>
-                <strong>Area</strong> <br /> {carpet_area}
+                <strong>Area</strong> <br /> {carpet_area} Sqft
               </div>
               <div>
                 <strong>Bedrooms</strong> <br /> {bedrooms}
