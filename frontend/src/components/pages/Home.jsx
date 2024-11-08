@@ -4,7 +4,8 @@ import InquiryForm from "../common/InquiryForm";
 import Marquee from "../common/Marquee";
 import Testimonials from "../common/Testimonials";
 import PropertyList from "../common/PropertyList";
-
+import FactsAndFigures from "../common/FactsAndFigures";
+import City from "../common/Location";
 
 function Home() {
   return (
@@ -13,7 +14,9 @@ function Home() {
       <PropertyRequirement />
       <PropertyList />
       <InquiryForm />
+      <City />
       <Marquee />
+      <FactsAndFigures />
       <Testimonials />
     </>
   );
