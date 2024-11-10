@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Logo from "../../assets/logo.png";
 import { FaPhoneAlt, FaUserAlt } from "react-icons/fa";
 import { HiMenu, HiX } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,9 +20,9 @@ const Navbar = () => {
 
           {/* Menu Items */}
           <div className="hidden md:flex space-x-6 items-center font-primary text-lg font-medium">
-            <div className="relative group">
+            <Link to={"/"} className="relative group">
               <button className="text-gray-700 hover:text-primary">HOME</button>
-            </div>
+            </Link>
 
             <div className="relative group">
               <button className="text-gray-700 hover:text-primary">
@@ -50,11 +51,11 @@ const Navbar = () => {
               </div>
             </div>
 
-            <div className="relative group">
+            <Link to={"/aboutus"} className="relative group">
               <button className="text-gray-700 hover:text-primary">
                 ABOUT US
               </button>
-            </div>
+            </Link>
 
             <div className="relative group">
               <button className="text-gray-700 hover:text-primary">

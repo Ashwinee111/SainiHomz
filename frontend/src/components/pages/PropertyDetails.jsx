@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaCheckCircle } from "react-icons/fa";
 import { propertyApi } from "../../Services/api";
+import { FaLocationDot } from "react-icons/fa6";
 
 import Image1 from "../../assets/1.webp";
 import Image2 from "../../assets/2.webp";
@@ -70,13 +71,16 @@ function PropertyDetails() {
   const amenitiesArray = amenities || [];
 
   return (
-    <div className="container mx-auto p-4 max-w-[1500px] font-primary">
+    <div className="container mx-auto p-4 max-w-[1500px] font-primary pt-[150px]">
       {/* Property Header */}
       <div className="flex flex-col lg:flex-row justify-between items-center p-4 bg-white shadow">
         <div>
           <h1 className="text-2xl font-bold">{title}</h1>
-          <p className="text-gray-600 flex items-center">
-            <span className="material-icons mr-1">location_on</span> {location}
+          <p className="flex items-center text-green-600 font-semibold">
+            <span className="material-icons mr-1">
+              <FaLocationDot />
+            </span>{" "}
+            {location}
           </p>
         </div>
         <div className="text-3xl font-bold text-green-600">$4,500/mo</div>
