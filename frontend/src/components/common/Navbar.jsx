@@ -57,11 +57,11 @@ const Navbar = () => {
               </button>
             </Link>
 
-            <div className="relative group">
+            <Link to={"/contactus"} className="relative group">
               <button className="text-gray-700 hover:text-primary">
                 CONTACT US
               </button>
-            </div>
+            </Link>
 
             <div className="flex items-center space-x-4">
               <FaPhoneAlt className="text-gray-500" />

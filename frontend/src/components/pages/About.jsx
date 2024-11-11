@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   FaBuilding,
   FaCar,
@@ -9,52 +8,12 @@ import {
 import AboutImage from "../../assets/about.jpg";
 import AboutImage2 from "../../assets/about2.jpg";
 
-const steps = [
-  {
-    id: 1,
-    title: "Search & Shortlist",
-    description:
-      "Nullam pharetra, velit quis varius porta, lorem libero maximus justo, at sodales sem.",
-    icon: <FaBuilding size={30} />,
-  },
-  {
-    id: 2,
-    title: "Site Visit",
-    description:
-      "Nullam pharetra, velit quis varius porta, lorem libero maximus justo, at sodales sem.",
-    icon: <FaCar size={30} />,
-  },
-  {
-    id: 3,
-    title: "Loan Assistance",
-    description:
-      "Nullam pharetra, velit quis varius porta, lorem libero maximus justo, at sodales sem.",
-    icon: <FaPiggyBank size={30} />,
-  },
-  {
-    id: 4,
-    title: "Legal Advice",
-    description:
-      "Nullam pharetra, velit quis varius porta, lorem libero maximus justo, at sodales sem.",
-    icon: <FaFileContract size={30} />,
-  },
-  {
-    id: 5,
-    title: "Unit Booking",
-    description:
-      "Nullam pharetra, velit quis varius porta, lorem libero maximus justo, at sodales sem.",
-    icon: <FaKey size={30} />,
-  },
-];
-
 function About() {
-  const [hoveredStep, setHoveredStep] = useState(1);
-
   return (
     <div className="pt-16 font-primary">
       {/* Header Section */}
       <div
-        className="relative bg-cover bg-center h-[50vh] flex items-center justify-center flex-col text-[#FFFFFF]"
+        className="relative bg-cover bg-center h-[50vh] flex items-center justify-center flex-col text-white"
         style={{ backgroundImage: `url(${AboutImage})` }}
       >
         <h2 className="text-4xl md:text-6xl font-bold z-10">About Us</h2>
@@ -65,7 +24,7 @@ function About() {
       </div>
 
       {/* Content Section */}
-      <div className="max-w-[1500px] mx-auto px-6 md:px-12 py-12">
+      <div className="max-w-[1500px] mx-auto px-6 md:px-12 pt-12">
         {/* Who We Are */}
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-semibold text-dark">
@@ -119,47 +78,65 @@ function About() {
         </div>
 
         {/* Our Process Content */}
-        <div className="py-20 bg-[#F9FAFB] rounded-md mt-10">
-          <div className="max-w-6xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center justify-between relative">
-              {steps.map((step) => (
-                <div
-                  key={step.id}
-                  className="relative text-center flex-1 z-10 mb-8 md:mb-0"
-                  onMouseEnter={() => setHoveredStep(step.id)}
-                  onMouseLeave={() => setHoveredStep(null)}
-                >
-                  {/* Step Circle Icon */}
-                  <div
-                    className={`flex items-center justify-center w-16 h-16 rounded-full mx-auto ${
-                      hoveredStep === step.id
-                        ? "bg-primary text-white"
-                        : "text-primary bg-gray-100"
-                    }`}
-                  >
-                    {step.icon}
+        <div className="py-6 flex flex-col justify-center sm:py-12">
+          <div className="py-3 sm:max-w-xl sm:mx-auto w-full px-2 sm:px-0">
+            <div className="relative text-gray-700 antialiased text-sm font-semibold">
+              {/* Vertical bar running through middle */}
+              <div className="hidden sm:block w-1 bg-[#50C55E] absolute h-full left-1/2 transform -translate-x-1/2"></div>
+
+              {/* Timeline Items */}
+              {[
+                {
+                  icon: FaBuilding,
+                  text: "Search & Shortlist",
+                  description:
+                    "Nullam pharetra, velit quis varius porta, lorem libero maximu justo, at sodales sem.",
+                },
+                {
+                  icon: FaCar,
+                  text: "Site Visit",
+                  description:
+                    "Nullam pharetra, velit quis varius porta, lorem libero maximu justo, at sodales sem.",
+                },
+                {
+                  icon: FaPiggyBank,
+                  text: "Loan Assistance",
+                  description:
+                    "Nullam pharetra, velit quis varius porta, lorem libero maximu justo, at sodales sem.",
+                },
+                {
+                  icon: FaFileContract,
+                  text: "Legal Advice",
+                  description:
+                    "Nullam pharetra, velit quis varius porta, lorem libero maximu justo, at sodales sem.",
+                },
+                {
+                  icon: FaKey,
+                  text: "Unit Booking",
+                  description:
+                    "Nullam pharetra, velit quis varius porta, lorem libero maximu justo, at sodales sem.",
+                },
+              ].map((item, index) => (
+                <div key={index} className="mt-6 sm:mt-0 sm:mb-12">
+                  <div className="flex flex-col sm:flex-row items-center">
+                    <div
+                      className={`flex ${
+                        index % 2 === 0 ? "justify-start" : "justify-end"
+                      } w-full mx-auto items-center`}
+                    >
+                      <div className="w-full sm:w-1/2 bg-[#cbf7c8]">
+                        <div className="px-10 py-5 rounded shadow text-xl font-semibold">
+                          <p>{item.text}</p>
+                          <p className="mt-2 text-gray-600 text-lg font-normal">
+                            {item.description}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="rounded-full bg-primary border-white border-4 w-16 h-16 absolute left-1/2 -translate-y-4 sm:translate-y-0 transform -translate-x-1/2 flex items-center justify-center">
+                      <item.icon className="text-white text-2xl" />
+                    </div>
                   </div>
-
-                  {/* Step Number */}
-                  <p className="text-xs font-semibold mt-2 text-primary">
-                    STEP {step.id.toString().padStart(2, "0")}
-                  </p>
-
-                  {/* Step Title */}
-                  <h3
-                    className={`font-semibold mt-2 text-lg ${
-                      hoveredStep === step.id ? "text-primary" : "text-gray-800"
-                    }`}
-                  >
-                    {step.title}
-                  </h3>
-
-                  {/* Step Description (Only shown on hover) */}
-                  {hoveredStep === step.id && (
-                    <p className="mt-2 text-lg text-gray-600 max-w-xs mx-auto">
-                      {step.description}
-                    </p>
-                  )}
                 </div>
               ))}
             </div>

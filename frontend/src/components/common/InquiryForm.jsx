@@ -1,4 +1,5 @@
 import InquiryBg from "../../assets/inquirybg.png";
+import Form from "../common/Form"
 
 const InquiryForm = () => {
   return (
@@ -7,7 +8,7 @@ const InquiryForm = () => {
       style={{ backgroundImage: `url(${InquiryBg})` }} // InquiryBg must be correctly imported
     >
       <div className="container mx-auto px-4 max-w-[1500px] flex justify-center items-center">
-        <div className="w-3/5 grid grid-rows-2 grid-cols-2 gap-6">
+        <div className="w-1/2 grid grid-rows-2 grid-cols-2 gap-6">
           <h2 className="text-5xl font-semibold text-white leading-[55px]">
             Why Our <br /> Service Is The Perfect Choice?
           </h2>
@@ -45,8 +46,8 @@ const InquiryForm = () => {
             </p>
           </div>
         </div>
-        <div className="w-2/5 flex justify-center items-center">
-          <div className="w-[70%] p-8 bg-white rounded-md">
+        <div className="w-1/2 flex justify-center items-center">
+          {/* <div className="w-[70%] p-8 bg-white rounded-md">
             <h2 className="text-center text-3xl font-semibold text-dark mb-6">
               Inquiry Form
             </h2>
@@ -90,7 +91,8 @@ const InquiryForm = () => {
                 Submit
               </button>
             </form>
-          </div>
+          </div> */}
+          <Form />
         </div>
       </div>
     </div>
