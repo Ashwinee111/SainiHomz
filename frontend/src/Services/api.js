@@ -5,3 +5,8 @@ export const propertyApi = {
   GET_PROPERTYDATA: BASE_URL + "/property/allproperty",
   GET_PROPERTYDATA_BY_ID: BASE_URL + "/property/properties/:id"
 };
+
+
+export const contactApi = {
+  CREATE_CONTACT: BASE_URL + "/contact/contacts"
+}

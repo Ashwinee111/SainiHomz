@@ -10,7 +10,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 
 // <-- Import Routes -->
-const propertyRoute = require("./routes/Property.routes")
+const propertyRoute = require("./routes/Property.routes");
+const contactRoute = require("./routes/Contact.routes");
 
 // <-- Database Connection -->
 const datBase = require("./config/dataBase");
@@ -22,7 +23,8 @@ app.get("/", (req, res) => {
 });
 
 // <-- Routes -->
-app.use("/api/v1/property", propertyRoute)
+app.use("/api/v1/property", propertyRoute);
+app.use("/api/v1/contact", contactRoute);
 
 // <-- Server Start -->
 app.listen(PORT, () => {

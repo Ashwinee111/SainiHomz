@@ -1,4 +1,10 @@
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import toast from "react-hot-toast";
+
+import { contactApi } from "../../Services/api";
+
+const { CREATE_CONTACT } = contactApi;
 
 function ContactForm() {
   const {
@@ -7,15 +13,30 @@ function ContactForm() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post(CREATE_CONTACT, data);
+      toast.success("Form submitted successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message ||
+          "An error occurred while submitting the form.",
+        {
+          position: "top-right",
+          autoClose: 3000,
+        }
+      );
+    }
   };
 
   return (
-    <div className="flex items-center justify-center w-1/2">
+    <div className="flex items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-[#F9FAFB] p-8 rounded-2xl shadow-lg w-full max-w-lg space-y-6"
+        className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-lg space-y-6"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Name Field */}

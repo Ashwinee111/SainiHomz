@@ -7,10 +7,18 @@ import "slick-carousel/slick/slick-theme.css";
 import { FaCheckCircle } from "react-icons/fa";
 import { propertyApi } from "../../Services/api";
 import { FaLocationDot } from "react-icons/fa6";
+import Form from "../common/Form";
+import {
+  FaInstagram,
+  FaLinkedin,
+  FaSquareFacebook,
+  FaSquareTwitter,
+} from "react-icons/fa6";
 
 import Image1 from "../../assets/1.webp";
 import Image2 from "../../assets/2.webp";
 import Image3 from "../../assets/3.webp";
+import Customer from "../../assets/customer.webp";
 
 function PropertyDetails() {
   // Carousel settings
@@ -83,7 +91,7 @@ function PropertyDetails() {
             {location}
           </p>
         </div>
-        <div className="text-3xl font-bold text-green-600">$4,500/mo</div>
+        <div className="text-3xl font-bold text-green-600">₹ {price}</div>
       </div>
 
       {/* Main Content */}
@@ -91,7 +99,7 @@ function PropertyDetails() {
         {/* Left Column */}
         <div className="lg:w-2/3">
           {/* Image Carousel */}
-          <Slider {...carouselSettings} className="my-6">
+          <Slider {...carouselSettings} className="mb-6">
             <div>
               <img
                 src={Image1}
@@ -187,34 +195,45 @@ function PropertyDetails() {
           </div>
         </div>
 
-        {/* Inquiry Form */}
+        {/* Right Side*/}
         <div className="lg:w-1/3">
-          <div className="bg-white p-6 shadow rounded-lg">
-            <h2 className="text-lg font-semibold mb-4">Submit an Inquiry</h2>
-            <form>
-              <input
-                type="text"
-                placeholder="Name"
-                className="w-full mb-4 p-2 border border-gray-300 rounded"
+          <div className="flex items-center justify-center mb-10">
+            <div className="bg-white rounded-lg shadow-lg p-6 w-full text-center">
+              <img
+                src={Customer}
+                alt="Expert"
+                className="w-24 h-24 rounded-full mx-auto"
               />
-              <input
-                type="email"
-                placeholder="Email"
-                className="w-full mb-4 p-2 border border-gray-300 rounded"
-              />
-              <input
-                type="tel"
-                placeholder="Phone (Optional)"
-                className="w-full mb-4 p-2 border border-gray-300 rounded"
-              />
-              <textarea
-                placeholder="Message"
-                className="w-full mb-4 p-2 border border-gray-300 rounded h-32"
-              />
-              <button className="w-full bg-green-500 text-white p-2 rounded">
-                Submit
-              </button>
-            </form>
+              <h2 className="text-lg font-semibold mt-4">
+                Get Advice from Our Real Estate Experts
+              </h2>
+              <p className="text-gray-600 mt-2">
+                Book your site visit today and explore your future home!
+              </p>
+              <a
+                href="tel:+1234567890"
+                className="bg-primary text-white font-semibold px-4 py-2 rounded-full mt-4 inline-block hover:bg-green-600"
+              >
+                Call Now
+              </a>
+              <div className="flex justify-center space-x-4 mt-4">
+                <a href="#" className="text-primary hover:text-green-600">
+                  <FaInstagram />
+                </a>
+                <a href="#" className="text-primary hover:text-green-600">
+                  <FaSquareFacebook />
+                </a>
+                <a href="#" className="text-primary hover:text-green-600">
+                  <FaLinkedin />
+                </a>
+                <a href="#" className="text-primary hover:text-green-600">
+                  <FaSquareTwitter />
+                </a>
+              </div>
+            </div>
+          </div>
+          <div>
+            <Form />
           </div>
         </div>
       </div>
