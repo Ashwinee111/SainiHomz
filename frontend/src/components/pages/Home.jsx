@@ -5,6 +5,7 @@ import Marquee from "../common/Marquee";
 import PropertyList from "../common/PropertyList";
 import FactsAndFigures from "../common/FactsAndFigures";
 import City from "../common/Location";
+import PropertyForm from "../common/PropertyForm"
 
 function Home() {
   return (
@@ -16,6 +17,7 @@ function Home() {
       <City />
       <Marquee />
       <FactsAndFigures />
+      <PropertyForm />
     </>
   );
 }

@@ -63,10 +63,10 @@ const Navbar = () => {
               </button>
             </Link>
 
-            <div className="flex items-center space-x-4">
-              <FaPhoneAlt className="text-gray-500" />
+            <a href="tel:9124570573" className="flex items-center space-x-4 bg-primary p-3 text-white rounded-md">
+              <FaPhoneAlt className="text-white animate-ring" />
               <span>(+91) 9124570573</span>
-            </div>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -100,10 +100,10 @@ const Navbar = () => {
               <a href="#" className="block text-gray-700 hover:text-primary">
                 OTHERS
               </a>
-              <div className="flex items-center space-x-2">
+              <a href="tel:9124570573" className="flex items-center space-x-2">
                 <FaPhoneAlt className="text-gray-500" />
                 <span>(800) 987 6543</span>
-              </div>
+              </a>
             </div>
           </div>
         )}

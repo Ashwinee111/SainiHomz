@@ -98,6 +98,9 @@ const PropertySchema = new mongoose.Schema({
   gallery: {
     type: [String],
   },
+  floor_plan: {
+    type: [String],
+  },
   date_posted: {
     type: Date,
     default: Date.now,

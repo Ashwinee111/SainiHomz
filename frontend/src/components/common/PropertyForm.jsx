@@ -43,9 +43,12 @@ const PropertyForm = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Submit Property</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg font-primary">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center my-5">Submit Property</h2>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+      >
         {/* Title */}
         <div>
           <label className="block mb-2 text-sm font-medium text-gray-700">
@@ -96,10 +99,9 @@ const PropertyForm = () => {
                   "Enter a valid price (e.g., 2.25 Cr or 2.25 Cr - 3.00 Cr)",
               },
               onChange: (e) => {
-                // Allow only numbers, periods, hyphens, and spaces
                 e.target.value = e.target.value
                   .replace(/[^0-9.\-\sCr]/g, "")
-                  .replace(/\s+/g, " "); // Normalize whitespace
+                  .replace(/\s+/g, " ");
               },
             })}
             placeholder="Enter price (e.g., 2.25 Cr or 2.25 Cr - 3.00 Cr)"
@@ -127,7 +129,7 @@ const PropertyForm = () => {
               "Balianta",
               "Patrapada",
               "Kalinga Nagar",
-              "Khandagiri",
+              "Khand agiri",
               "Rasulgarh",
               "Sailashree Vihar",
               "Sundarpada",
@@ -166,7 +168,7 @@ const PropertyForm = () => {
               "Villas",
               "Luxury Homes",
               "Branded Residences",
-              "Ploat",
+              "Plot",
             ].map((type) => (
               <option key={type} value={type}>
                 {type}
@@ -210,16 +212,15 @@ const PropertyForm = () => {
             {...register("carpet_area", {
               required: "Carpet area is required",
               pattern: {
-                value: /^\d+(\s*-\s*\d+)?$/, // Allows only numbers and optional hyphen for range
+                value: /^\d+(\s*-\s*\d+)?$/,
                 message:
                   "Enter a valid carpet area (e.g., 1950 or 1000 - 2000)",
               },
               onChange: (e) => {
-                // Allow only numbers, spaces, and hyphens
                 e.target.value = e.target.value
-                  .replace(/[^0-9\s-]/g, "") // Remove any characters that are not numbers, spaces, or hyphens
-                  .replace(/\s+/g, " ") // Normalize multiple spaces to a single space
-                  .trim(); // Remove leading/trailing spaces
+                  .replace(/[^0-9\s-]/g, "")
+                  .replace(/\s+/g, " ")
+                  .trim();
               },
             })}
             placeholder="Enter carpet area (e.g., 1950 or 1000 - 2000)"
@@ -280,11 +281,9 @@ const PropertyForm = () => {
           </label>
           <select
             className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
-            {...register("status", {
-              required: "Status is required",
-            })}
+            {...register("status", { required: "Status is required" })}
           >
-            {["Under Construction", "ReSell", "Ready to Move"].map((status) => (
+            {["UnderConstruction", "ReSell", "Ready to Move"].map((status) => (
               <option key={status} value={status}>
                 {status}
               </option>
@@ -310,14 +309,12 @@ const PropertyForm = () => {
                 message: "Enter a valid possession date (e.g., June-2024)",
               },
               onChange: (e) => {
-                // Allow letters, numbers, and hyphens for manual entry
                 e.target.value = e.target.value
-                  .replace(/[^a-zA-Z0-9-]/g, "") // Allow letters, numbers, and hyphens
-                  .replace(/([a-zA-Z]+)-/g, "$1-") // Normalize spacing around the hyphen
-                  .trim(); // Remove leading/trailing spaces
+                  .replace(/[^a-zA-Z0-9-]/g, "")
+                  .replace(/([a-zA-Z]+)-/g, "$1-")
+                  .trim();
               },
               onBlur: (e) => {
-                // Validate the format on blur
                 const value = e.target.value;
                 if (
                   !/^(January|February|March|April|May|June|July|August|September|October|November|December)-\d{4}$/.test(
@@ -426,11 +423,14 @@ const PropertyForm = () => {
             Availability Status
           </label>
           <select
-            className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 bg-white text-gray-700"
             {...register("availability_status", {
               required: "Availability Status is required",
             })}
           >
+            <option value="" disabled>
+              Select availability status
+            </option>
             {["Available", "Sold"].map((status) => (
               <option key={status} value={status}>
                 {status}
@@ -445,12 +445,14 @@ const PropertyForm = () => {
         </div>
 
         {/* Submit Button */}
-        <button
-          type="submit"
-          className="w-full p-3 bg-primary text-white font-medium rounded-md hover:bg-primary transition duration-300"
-        >
-          Submit Property
-        </button>
+        <div className="col-span-2">
+          <button
+            type="submit"
+            className="w-full p-3 bg-primary text-white font-medium rounded-md hover:bg-primary transition duration-300"
+          >
+            Submit Property
+          </button>
+        </div>
       </form>
     </div>
   );

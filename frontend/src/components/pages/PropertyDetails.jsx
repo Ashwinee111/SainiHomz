@@ -14,6 +14,7 @@ import {
   FaSquareFacebook,
   FaSquareTwitter,
 } from "react-icons/fa6";
+import EmiCalculator from "../common/EmiCalculator";
 
 import Image1 from "../../assets/1.webp";
 import Image2 from "../../assets/2.webp";
@@ -78,20 +79,38 @@ function PropertyDetails() {
 
   const amenitiesArray = amenities || [];
 
+  const floorPlans = [
+    "https://baldwa.co.in/wp-content/uploads/2023/10/house-plan-and-3D-elevation-in-india.jpg",
+    "https://archivaldesigns.com/cdn/shop/products/Still-Creek-Ranch-First-Floor_M_1200x.jpg?v=1725884665",
+    "https://media.brownhavenhomes.com/47/2021/11/5/A_-_Amicalola_Standard_Floor_Plan.jpg?width=1920&ois=11a1345&fit=bounds&height=1375",
+    "https://cdn.houseplansservices.com/content/5r79diamjjjh99ps6hl4i69bqt/w575.jpg?v=9",
+    "https://archivaldesigns.com/cdn/shop/products/Still-Creek-Ranch-First-Floor_M_1200x.jpg?v=1725884665",
+  ];
+
   return (
     <div className="container mx-auto p-4 max-w-[1500px] font-primary pt-[150px]">
       {/* Property Header */}
       <div className="flex flex-col lg:flex-row justify-between items-center p-4 bg-white shadow">
         <div>
-          <h1 className="text-2xl font-bold">{title}</h1>
-          <p className="flex items-center text-green-600 font-semibold">
-            <span className="material-icons mr-1">
-              <FaLocationDot />
-            </span>{" "}
-            {location}
-          </p>
+          <div className="flex justify-center items-center gap-4">
+            <h2 className="text-2xl font-bold">{title}</h2>
+            <p className="flex items-center text-green-600 font-semibold">
+              <span className="material-icons mr-1">
+                <FaLocationDot />
+              </span>{" "}
+              {location}
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <p className="bg-primary p-2 text-white font-semibold rounded-md text-center w-full mt-2">
+              {property_type}
+            </p>
+            <p className="bg-[#94A0DF] p-2 text-white font-semibold rounded-md text-center w-full mt-2">
+              {availability_status}
+            </p>
+          </div>
         </div>
-        <div className="text-3xl font-bold text-green-600">₹ {price}</div>
+        <div className="text-3xl font-semibold text-green-600">₹ {price}</div>
       </div>
 
       {/* Main Content */}
@@ -193,6 +212,23 @@ function PropertyDetails() {
               ))}
             </ul>
           </div>
+
+          {/* Amenities */}
+          <div className="bg-white p-6 mt-8 shadow rounded-lg">
+            <h2 className="text-xl font-medium mb-4 bg-gray-100 rounded-lg p-3">
+              Floor Plans
+            </h2>
+            <div className="flex gap-4 flex-wrap justify-center p-4">
+              {floorPlans.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={`Image ${index + 1}`}
+                  className="w-56 h-auto rounded-lg shadow-lg"
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Right Side*/}
@@ -232,8 +268,13 @@ function PropertyDetails() {
               </div>
             </div>
           </div>
+          {/* {Form} */}
           <div>
             <Form />
+          </div>
+          {/* EmiCalculator */}
+          <div>
+            <EmiCalculator />
           </div>
         </div>
       </div>
