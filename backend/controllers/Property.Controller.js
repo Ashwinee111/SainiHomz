@@ -1,7 +1,13 @@
 const Property = require("../models/Property.model");
 const mongoose = require("mongoose");
 
-// Add new property
+// Upload image to Cloudinary
+exports.uploadImageToCloudinary = async (file, folder) => {
+  const options = { folder, resource_type: "auto" };
+  return await cloudinary.uploader.upload(file.tempFilePath, options);
+};
+
+// Add new property with image uploads
 exports.addProperty = async (req, res) => {
   try {
     const {
@@ -16,18 +22,21 @@ exports.addProperty = async (req, res) => {
       bedrooms,
       bathrooms,
       amenities,
-      featured_image,
       address,
       furnishing,
-      gallery,
       status,
-      possession
+      possession,
     } = req.body;
 
     // Check if required fields are missing
     if (!title || !description || !price || !location || !property_type) {
       return res.status(400).json({ error: "Required fields are missing." });
     }
+
+    // Upload images to Cloudinary
+    const featuredImage = req.files.featured_image ? await this.uploadImageToCloudinary(req.files.featured_image, 'properties/featured') : null;
+    const floorPlanImage = req.files.floor_plan ? await this.uploadImageToCloudinary(req.files.floor_plan, 'properties/floor_plan') : null;
+    const galleryImages = req.files.gallery ? await Promise.all(req.files.gallery.map(file => this.uploadImageToCloudinary(file, 'properties/gallery'))) : [];
 
     const newProperty = new Property({
       title,
@@ -41,12 +50,13 @@ exports.addProperty = async (req, res) => {
       bedrooms,
       bathrooms,
       amenities,
-      featured_image,
+      featured_image: featuredImage ? featuredImage.secure_url : null,
       address,
       furnishing,
-      gallery,
       status,
-      possession
+      possession,
+      floor_plan: floorPlanImage ? floorPlanImage.secure_url : null,
+      gallery: galleryImages.map(img => img.secure_url), // Store URLs of gallery images
     });
 
     const savedProperty = await newProperty.save();
