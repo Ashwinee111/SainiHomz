@@ -75,7 +75,7 @@ const PropertySchema = new mongoose.Schema({
   },
   featured_image: {
     type: String,
-    // required: true,
+    required: true,
   },
   address: {
     type: String,

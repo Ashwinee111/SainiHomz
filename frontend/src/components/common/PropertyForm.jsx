@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
-
 import { propertyApi } from "../../Services/api";
 
 const { POST_PROPERTYDATA } = propertyApi;
@@ -13,38 +13,81 @@ const PropertyForm = () => {
     setError,
     formState: { errors },
   } = useForm();
+  const [loading, setLoading] = useState(false);
+  const [galleryLoading, setGalleryLoading] = useState(false);
+  const [floorPlanLoading, setFloorPlanLoading] = useState(false);
+
+  const uploadToCloudinary = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "sainihomz");
+    try {
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dyd44ikba/image/upload",
+        formData
+      );
+      return response.data.secure_url;
+    } catch (error) {
+      throw new Error(`Failed to upload ${file.name}`);
+    }
+  };
 
   const onSubmit = async (data) => {
-    // Process the amenities input to create an array
-    const amenitiesArray = data.amenities.split(",").map((item) => item.trim());
-
-    // Create the final data object to send to the API
-    const propertyData = {
-      ...data,
-      amenities: amenitiesArray, // Update the amenities field to be an array
-    };
+    setLoading(true);
+    setGalleryLoading(true);
+    setFloorPlanLoading(true);
 
     try {
-      const response = await axios.post(POST_PROPERTYDATA, propertyData);
+      const galleryUrls = data.gallery
+        ? await Promise.all(
+            Array.from(data.gallery).map((file) => uploadToCloudinary(file))
+          )
+        : [];
+      setGalleryLoading(false);
 
+      const floorPlanUrls = data.floor_plan
+        ? await Promise.all(
+            Array.from(data.floor_plan).map((file) => uploadToCloudinary(file))
+          )
+        : [];
+      setFloorPlanLoading(false);
+
+      const featuredImageUrl = data.featured_image?.[0]
+        ? await uploadToCloudinary(data.featured_image[0])
+        : null;
+
+      if (!featuredImageUrl) {
+        handleUploadError("featured_image", "Featured image is required.");
+      }
+
+      const propertyData = {
+        ...data,
+        amenities: data.amenities.split(",").map((item) => item.trim()),
+        gallery: galleryUrls,
+        floor_plan: floorPlanUrls,
+        featured_image: featuredImageUrl,
+      };
+
+      const response = await axios.post(POST_PROPERTYDATA, propertyData);
       if (response.status === 201) {
         toast.success("Property submitted successfully!");
       } else {
         toast.error("Something went wrong, please try again.");
       }
     } catch (error) {
-      console.error("Error submitting property:", error);
-      if (error.response && error.response.data) {
-        toast.error(`Error: ${error.response.data.error}`);
-      } else {
-        toast.error("An unexpected error occurred.");
-      }
+      console.error(error);
+      toast.error(error.message || "Failed to submit property.");
+    } finally {
+      setLoading(false);
+      setGalleryLoading(false);
+      setFloorPlanLoading(false);
     }
   };
-
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg font-primary">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center my-5">Submit Property</h2>
+      <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center my-5">
+        Submit Property
+      </h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="grid grid-cols-1 md:grid-cols-2 gap-6"
@@ -283,7 +326,7 @@ const PropertyForm = () => {
             className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
             {...register("status", { required: "Status is required" })}
           >
-            {["UnderConstruction", "ReSell", "Ready to Move"].map((status) => (
+            {["Under Construction", "ReSell", "Ready to Move"].map((status) => (
               <option key={status} value={status}>
                 {status}
               </option>
@@ -358,14 +401,22 @@ const PropertyForm = () => {
         {/* Featured Image */}
         <div>
           <label className="block mb-2 text-sm font-medium text-gray-700">
-            Featured Image URL
+            Featured Image
           </label>
           <input
-            className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+            type="file"
+            accept="image/*"
+            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
             {...register("featured_image", {
               required: "Featured image is required",
+              validate: (files) => {
+                const file = files[0];
+                if (file && file.size > 2 * 1024 * 1024) {
+                  return "File size should not exceed 2MB";
+                }
+                return true;
+              },
             })}
-            placeholder="Enter featured image URL"
           />
           {errors.featured_image && (
             <p className="text-red-500 text-sm mt-1">
@@ -443,11 +494,41 @@ const PropertyForm = () => {
             </p>
           )}
         </div>
+        {/* Gallery */}
+        <div>
+          <label className="block mb-2 text-sm font-medium text-gray-700">
+            Gallery
+          </label>
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
+            {...register("gallery")}
+          />
+          {galleryLoading && <p>Uploading gallery images...</p>}
+        </div>
+
+        {/* Floor Plan */}
+        <div>
+          <label className="block mb-2 text-sm font-medium text-gray-700">
+            Floor Plan
+          </label>
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
+            {...register("floor_plan")}
+          />
+          {floorPlanLoading && <p>Uploading floor plan images...</p>}
+        </div>
 
         {/* Submit Button */}
         <div className="col-span-2">
           <button
             type="submit"
+            disabled={loading}
             className="w-full p-3 bg-primary text-white font-medium rounded-md hover:bg-primary transition duration-300"
           >
             Submit Property

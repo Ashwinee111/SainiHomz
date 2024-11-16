@@ -67,7 +67,6 @@ function PropertyDetails() {
     carpet_area,
     configuration,
     description,
-    featured_image,
     furnishing,
     location,
     price,
@@ -75,17 +74,11 @@ function PropertyDetails() {
     title,
     possession,
     status,
+    gallery,
+    floor_plan,
   } = property;
 
   const amenitiesArray = amenities || [];
-
-  const floorPlans = [
-    "https://baldwa.co.in/wp-content/uploads/2023/10/house-plan-and-3D-elevation-in-india.jpg",
-    "https://archivaldesigns.com/cdn/shop/products/Still-Creek-Ranch-First-Floor_M_1200x.jpg?v=1725884665",
-    "https://media.brownhavenhomes.com/47/2021/11/5/A_-_Amicalola_Standard_Floor_Plan.jpg?width=1920&ois=11a1345&fit=bounds&height=1375",
-    "https://cdn.houseplansservices.com/content/5r79diamjjjh99ps6hl4i69bqt/w575.jpg?v=9",
-    "https://archivaldesigns.com/cdn/shop/products/Still-Creek-Ranch-First-Floor_M_1200x.jpg?v=1725884665",
-  ];
 
   return (
     <div className="container mx-auto p-4 max-w-[1500px] font-primary pt-[150px]">
@@ -119,19 +112,21 @@ function PropertyDetails() {
         <div className="lg:w-2/3">
           {/* Image Carousel */}
           <Slider {...carouselSettings} className="mb-6">
-            <div>
-              <img
-                src={Image1}
-                alt="House 1"
-                className="w-full object-cover "
-              />
-            </div>
-            <div>
-              <img src={Image2} alt="House 2" className="w-full object-cover" />
-            </div>
-            <div>
-              <img src={Image3} alt="House 3" className="w-full object-cover" />
-            </div>
+            {gallery && gallery.length > 0 ? (
+              gallery.map((imageUrl, index) => (
+                <div key={index}>
+                  <img
+                    src={imageUrl}
+                    alt={`Gallery image ${index + 1}`}
+                    className="w-full object-cover"
+                  />
+                </div>
+              ))
+            ) : (
+              <div>
+                <p className="text-center text-gray-500">No images available</p>
+              </div>
+            )}
           </Slider>
 
           {/* Property Overview */}
@@ -213,13 +208,13 @@ function PropertyDetails() {
             </ul>
           </div>
 
-          {/* Amenities */}
+          {/* Floor plans */}
           <div className="bg-white p-6 mt-8 shadow rounded-lg">
             <h2 className="text-xl font-medium mb-4 bg-gray-100 rounded-lg p-3">
               Floor Plans
             </h2>
             <div className="flex gap-4 flex-wrap justify-center p-4">
-              {floorPlans.map((image, index) => (
+              {floor_plan.map((image, index) => (
                 <img
                   key={index}
                   src={image}
