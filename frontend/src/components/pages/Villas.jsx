@@ -1,5 +1,5 @@
 import axios from "axios";
-import Image1 from "../../assets/property.jpg";
+import Image1 from "../../assets/villabanner.jpg";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PropertyCard from "../common/PropertyCard";
@@ -7,7 +7,7 @@ import { propertyApi } from "../../Services/api";
 
 const { GET_PROPERTYDATA } = propertyApi;
 
-const PropertyList = () => {
+const Villas = () => {
   const [properties, setProperties] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Current page
   const [loading, setLoading] = useState(true);
@@ -18,7 +18,12 @@ const PropertyList = () => {
     const fetchProperties = async () => {
       try {
         const response = await axios.get(GET_PROPERTYDATA);
-        setProperties(response.data);
+        console.log(response);
+        // Filter only apartments
+        const apartments = response.data.filter(
+          (property) => property.property_type === "Villas"
+        );
+        setProperties(apartments);
       } catch (error) {
         console.error("Error fetching properties:", error);
       } finally {
@@ -47,11 +52,9 @@ const PropertyList = () => {
         className="relative bg-cover bg-center h-[50vh] flex items-center justify-center flex-col text-white"
         style={{ backgroundImage: `url(${Image1})` }}
       >
-        <h2 className="text-4xl md:text-6xl font-bold z-10">
-          Property Listing
-        </h2>
+        <h2 className="text-4xl md:text-6xl font-bold z-10">Villas Listings</h2>
         <p className="text-xl md:text-2xl mt-6 z-10">
-          Home / <span className="text-[#A5A8B1]">Property</span>
+          Home / <span className="text-[#A5A8B1]">Villas</span>
         </p>
         <div className="absolute inset-0 bg-black opacity-60"></div>
       </div>
@@ -60,7 +63,7 @@ const PropertyList = () => {
       <div className="max-w-[1500px] mx-auto px-4 py-8">
         {loading ? (
           <p className="text-center text-xl font-semibold">
-            Loading properties...
+            Loading apartments...
           </p>
         ) : currentProperties.length > 0 ? (
           <>
@@ -91,8 +94,8 @@ const PropertyList = () => {
             </div>
           </>
         ) : (
-          <p className="text-center text-xl font-semibold text-gray-500">
-            No properties available at the moment.
+          <p className="text-center text-xl font-semibold text-red-500">
+            No villas available at the moment.
           </p>
         )}
       </div>
@@ -100,4 +103,4 @@ const PropertyList = () => {
   );
 };
 
-export default PropertyList;
+export default Villas;

@@ -1,23 +1,23 @@
 import Hero from "../common/Hero";
-import PropertyRequirement from "../common/PropertyRequirement";
+import PropertyType from "../common/PropertyType";
 import InquiryForm from "../common/InquiryForm";
 import Marquee from "../common/Marquee";
 import PropertyList from "../common/PropertyList";
 import FactsAndFigures from "../common/FactsAndFigures";
 import City from "../common/Location";
-import PropertyForm from "../common/PropertyForm"
+// import PropertyForm from "../common/PropertyForm"
 
 function Home() {
   return (
     <>
       <Hero />
-      <PropertyRequirement />
+      <PropertyType />
       <PropertyList />
       <InquiryForm />
       <City />
       <Marquee />
       <FactsAndFigures />
-      <PropertyForm />
+      {/* <PropertyForm /> */}
     </>
   );
 }

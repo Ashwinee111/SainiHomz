@@ -118,7 +118,7 @@ function PropertyDetails() {
                   <img
                     src={imageUrl}
                     alt={`Gallery image ${index + 1}`}
-                    className="w-full object-cover"
+                    className="w-[1200px] h-[628px] object-cover"
                   />
                 </div>
               ))

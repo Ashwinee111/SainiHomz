@@ -34,6 +34,8 @@ const PropertySchema = new mongoose.Schema({
       "Pahala",
       "Phulnakhara",
       "Madanpur",
+      "Baramunda",
+      "Trisulia",
     ],
     required: true,
   },

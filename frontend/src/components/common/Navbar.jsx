@@ -24,32 +24,11 @@ const Navbar = () => {
               <button className="text-gray-700 hover:text-primary">HOME</button>
             </Link>
 
-            <div className="relative group">
+            <Link to={"/property"} className="relative group">
               <button className="text-gray-700 hover:text-primary">
                 PROPERTY
               </button>
-              {/* Dropdown */}
-              <div className="absolute hidden group-hover:block bg-white shadow-md mt-2 rounded-md">
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm hover:bg-gray-100"
-                >
-                  Apartment
-                </a>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm hover:bg-gray-100"
-                >
-                  Houses
-                </a>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm hover:bg-gray-100"
-                >
-                  Offices
-                </a>
-              </div>
-            </div>
+            </Link>
 
             <Link to={"/aboutus"} className="relative group">
               <button className="text-gray-700 hover:text-primary">
@@ -63,7 +42,10 @@ const Navbar = () => {
               </button>
             </Link>
 
-            <a href="tel:9124570573" className="flex items-center space-x-4 bg-primary p-3 text-white rounded-md">
+            <a
+              href="tel:9124570573"
+              className="flex items-center space-x-4 bg-primary p-3 text-white rounded-md"
+            >
               <FaPhoneAlt className="text-white animate-ring" />
               <span>(+91) 9124570573</span>
             </a>

@@ -137,17 +137,20 @@ const PropertyForm = () => {
             {...register("price", {
               required: "Price is required",
               pattern: {
-                value: /^\d+(\.\d{1,2})?\sCr(\s-\s\d+(\.\d{1,2})?\sCr)?$/,
+                value:
+                  /^\d+(\.\d{1,2})?\s(Cr|Lac)(\s-\s\d+(\.\d{1,2})?\s(Cr|Lac))?$/,
                 message:
-                  "Enter a valid price (e.g., 2.25 Cr or 2.25 Cr - 3.00 Cr)",
+                  "Enter a valid price (e.g., 2.25 Cr, 25 Lac, or 2.25 Cr - 3.00 Cr)",
               },
               onChange: (e) => {
                 e.target.value = e.target.value
-                  .replace(/[^0-9.\-\sCr]/g, "")
-                  .replace(/\s+/g, " ");
+                  .replace(/[^0-9.\-\sCrLac]/g, "")
+                  .replace(/\s+/g, " ")
+                  .replace(/(Cr|Lac)/g, " $1")
+                  .trim();
               },
             })}
-            placeholder="Enter price (e.g., 2.25 Cr or 2.25 Cr - 3.00 Cr)"
+            placeholder="Enter price (e.g., 2.25 Cr, 25 Lac, or 2.25 Cr - 3.00 Cr)"
           />
           {errors.price && (
             <p className="text-red-500 text-sm mt-1">{errors.price.message}</p>
@@ -172,7 +175,8 @@ const PropertyForm = () => {
               "Balianta",
               "Patrapada",
               "Kalinga Nagar",
-              "Khand agiri",
+              "Khandagiri",
+              "Baramunda",
               "Rasulgarh",
               "Sailashree Vihar",
               "Sundarpada",
@@ -182,6 +186,7 @@ const PropertyForm = () => {
               "Pahala",
               "Phulnakhara",
               "Madanpur",
+              "Trisulia",
             ].map((location) => (
               <option key={location} value={location}>
                 {location}

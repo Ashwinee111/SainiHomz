@@ -1,12 +1,19 @@
-import React from "react";
-import bgImage from "../../assets/hero.jpg"; // Replace with your background image
+// Replace with your video file
 
 const Hero = () => {
   return (
-    <section
-      className="relative h-screen max-h-[900px] bg-center bg-cover flex items-center justify-center font-primary"
-      style={{ backgroundImage: `url(${bgImage})` }}
-    >
+    <section className="relative h-screen max-h-[900px] flex items-center justify-center font-primary">
+      {/* Background Video */}
+      <video
+        className="absolute top-0 left-0 w-full h-full object-cover"
+        autoPlay
+        loop
+        muted
+      >
+        <source src="https://res.cloudinary.com/dd8zpyf5j/video/upload/v1733474759/kojiqsfqt8llhcdikqgi.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
       {/* Overlay */}
       <div className="absolute inset-0 bg-black opacity-50"></div>
 

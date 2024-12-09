@@ -85,7 +85,6 @@ function Contact() {
                   Contact Us
                 </h4>
                 <p className="text-gray-600">+91-9124570576</p>
-                <p className="text-gray-600">+91-9124570573</p>
               </div>
             </div>
 
