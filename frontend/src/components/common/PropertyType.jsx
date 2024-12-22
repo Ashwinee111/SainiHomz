@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { propertyApi } from "../../Services/api";
 const { GET_PROPERTYDATA } = propertyApi;
-import { MdApartment, MdHolidayVillage } from "react-icons/md";
-import { FaBuilding } from "react-icons/fa";
-import { BiBuildingHouse } from "react-icons/bi";
+import ApartmentIcon from "../../assets/apartment_icon.png";
+import VillaIcon from "../../assets/villa_icon.png"; // Fixed typo here
+import LuxuryIcon from "../../assets/luxury_icon.png";
+import ResidenceIcon from "../../assets/residence_icon.png";
 
 const PropertyType = () => {
   const [counts, setCounts] = useState({
@@ -78,37 +79,37 @@ const PropertyType = () => {
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {[
+          {[ 
             {
               key: "apartments",
               label: "Apartments",
               count: counts.apartments,
-              icon: <MdApartment className="text-5xl text-primary" />,
+              icon: ApartmentIcon,
             },
             {
               key: "villas",
               label: "Villas",
               count: counts.villas,
-              icon: <MdHolidayVillage className="text-5xl text-primary" />,
+              icon: VillaIcon,
             },
             {
               key: "luxury",
               label: "Luxury Homes",
               count: counts.luxury,
-              icon: <FaBuilding className="text-5xl text-primary" />,
+              icon: LuxuryIcon, 
             },
             {
               key: "branded",
               label: "Branded Residences",
               count: counts.branded,
-              icon: <BiBuildingHouse className="text-5xl text-primary" />,
+              icon: ResidenceIcon, 
             },
           ].map(({ key, label, count, icon }, index) => (
             <article
               key={index}
               className="bg-white shadow-md rounded-2xl border-2 border-primary p-10 flex flex-col items-center justify-center space-y-2 hover:shadow-xl transition-all"
             >
-              {icon}
+              <img src={icon} alt={label} className="h-16 w-16 mb-4" /> {/* Render icon image */}
               <h3 className="text-2xl font-semibold my-12">{label}</h3>
               <p className="text-gray-500 text-lg">{count} Properties</p>
               <div

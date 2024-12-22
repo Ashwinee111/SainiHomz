@@ -15,10 +15,6 @@ import {
   FaSquareTwitter,
 } from "react-icons/fa6";
 import EmiCalculator from "../common/EmiCalculator";
-
-import Image1 from "../../assets/1.webp";
-import Image2 from "../../assets/2.webp";
-import Image3 from "../../assets/3.webp";
 import Customer from "../../assets/customer.webp";
 
 function PropertyDetails() {

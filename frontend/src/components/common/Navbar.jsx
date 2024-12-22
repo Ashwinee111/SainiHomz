@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Logo from "../../assets/logo.png";
-import { FaPhoneAlt, FaUserAlt } from "react-icons/fa";
+import { FaPhoneAlt } from "react-icons/fa";
 import { HiMenu, HiX } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
@@ -16,30 +16,34 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <img src={Logo} alt="site-logo" className="w-[65px] lg:w-[80px]" />
+          <Link to="/">
+            <img src={Logo} alt="site-logo" className="w-[65px] lg:w-[80px]" />
+          </Link>
 
           {/* Menu Items */}
           <div className="hidden md:flex space-x-6 items-center font-primary text-lg font-medium">
-            <Link to={"/"} className="relative group">
+            <Link to="/" className="relative group">
               <button className="text-gray-700 hover:text-primary">HOME</button>
             </Link>
 
-            <Link to={"/property"} className="relative group">
-              <button className="text-gray-700 hover:text-primary">
-                PROPERTY
-              </button>
+            <Link to="/property" className="relative group">
+              <button className="text-gray-700 hover:text-primary">PROPERTY</button>
             </Link>
 
-            <Link to={"/aboutus"} className="relative group">
-              <button className="text-gray-700 hover:text-primary">
-                ABOUT US
-              </button>
+            <Link to="/apartments" className="relative group">
+              <button className="text-gray-700 hover:text-primary">APARTMENTS</button>
             </Link>
 
-            <Link to={"/contactus"} className="relative group">
-              <button className="text-gray-700 hover:text-primary">
-                CONTACT US
-              </button>
+            <Link to="/villas" className="relative group">
+              <button className="text-gray-700 hover:text-primary">VILLAS</button>
+            </Link>
+
+            <Link to="/aboutus" className="relative group">
+              <button className="text-gray-700 hover:text-primary">ABOUT US</button>
+            </Link>
+
+            <Link to="/contactus" className="relative group">
+              <button className="text-gray-700 hover:text-primary">CONTACT US</button>
             </Link>
 
             <a
@@ -65,28 +69,29 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden">
-            <div className="space-y-2">
-              <a href="#" className="block text-gray-700 hover:text-primary">
-                HOME
-              </a>
-              <a href="#" className="block text-gray-700 hover:text-primary">
-                PROPERTIES
-              </a>
-              <a href="#" className="block text-gray-700 hover:text-primary">
-                PROPERTY
-              </a>
-              <a href="#" className="block text-gray-700 hover:text-primary">
-                REALTOR
-              </a>
-              <a href="#" className="block text-gray-700 hover:text-primary">
-                OTHERS
-              </a>
-              <a href="tel:9124570573" className="flex items-center space-x-2">
-                <FaPhoneAlt className="text-gray-500" />
-                <span>(800) 987 6543</span>
-              </a>
-            </div>
+          <div className="md:hidden space-y-2">
+            <Link to="/" className="block text-gray-700 hover:text-primary">
+              HOME
+            </Link>
+            <Link to="/property" className="block text-gray-700 hover:text-primary">
+              PROPERTY
+            </Link>
+            <Link to="/apartments" className="block text-gray-700 hover:text-primary">
+              APARTMENTS
+            </Link>
+            <Link to="/villas" className="block text-gray-700 hover:text-primary">
+              VILLAS
+            </Link>
+            <Link to="/aboutus" className="block text-gray-700 hover:text-primary">
+              ABOUT US
+            </Link>
+            <Link to="/contactus" className="block text-gray-700 hover:text-primary">
+              CONTACT US
+            </Link>
+            <a href="tel:9124570573" className="flex items-center space-x-2">
+              <FaPhoneAlt className="text-gray-500" />
+              <span>(+91) 9124570573</span>
+            </a>
           </div>
         )}
       </div>

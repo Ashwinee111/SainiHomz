@@ -1,3 +1,4 @@
+import SmoothMarquee from "react-smooth-marquee";
 import image1 from "../../assets/patners/1.svg";
 import image2 from "../../assets/patners/2.png";
 import image3 from "../../assets/patners/3.jpeg";
@@ -38,27 +39,30 @@ const Marquee = () => {
         <h2 className="text-center text-5xl font-semibold text-dark mt-6 mb-14">
           Real Estate Partners
         </h2>
-        {/* The marquee container */}
-        <div className="flex justify-between animate-marquee space-x-8 mt-14">
-          {/* Loop through the images and display each */}
-          {images.map((image, index) => (
-            <img
-              key={index}
-              src={image}
-              alt={`Marquee image ${index + 1}`}
-              className="w-full h-[80px] object-cover"
-            />
-          ))}
-          {/* Duplicate the images to create a seamless loop effect */}
-          {images.map((image, index) => (
-            <img
-              key={`duplicate-${index}`}
-              src={image}
-              alt={`Marquee duplicate ${index + 1}`}
-              className="w-full h-[80px] object-cover"
-            />
-          ))}
-        </div>
+        {/* SmoothMarquee component with column-wise images */}
+        <SmoothMarquee>
+          {/* Create a flex container with column direction for images */}
+          <div className="flex items-center space-y-8">
+            {/* Loop through the images and display each */}
+            {images.map((image, index) => (
+              <img
+                key={index}
+                src={image}
+                alt={`Marquee image ${index + 1}`}
+                className="w-[150px] h-[150px] object-contain mx-3"
+              />
+            ))}
+            {/* Duplicate the images to create a seamless loop effect */}
+            {images.map((image, index) => (
+              <img
+                key={`duplicate-${index}`}
+                src={image}
+                alt={`Marquee duplicate ${index + 1}`}
+                className="w-[150px] h-[150px] object-contain mx-3"
+              />
+            ))}
+          </div>
+        </SmoothMarquee>
       </div>
     </div>
   );

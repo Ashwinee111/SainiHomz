@@ -17,10 +17,13 @@ import Patia from "./components/pages/Patia";
 import Pahala from "./components/pages/Pahala";
 import Khandagiri from "./components/pages/Khandagiri";
 import Trisulia from "./components/pages/Trisulia";
+import ScrollToTop from "./components/common/ScrollToTop.jsx";
+
 
 function App() {
   return (
     <>
+      <ScrollToTop />
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

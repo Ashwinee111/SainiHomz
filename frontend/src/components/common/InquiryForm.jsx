@@ -1,13 +1,16 @@
 import InquiryBg from "../../assets/inquirybg.png";
-import Form from "../common/Form"
+import Form from "../common/Form";
 
 const InquiryForm = () => {
   return (
     <div
-      className="flex justify-center items-center min-h-[70vh] bg-gray-100 bg-cover bg-no-repeat font-primary py-24"
-      style={{ backgroundImage: `url(${InquiryBg})` }} // InquiryBg must be correctly imported
+      className="relative flex justify-center items-center min-h-[70vh] bg-gray-100 bg-cover bg-no-repeat font-primary py-24"
+      style={{ backgroundImage: `url(${InquiryBg})` }}
     >
-      <div className="container mx-auto px-4 max-w-[1500px] flex justify-center items-center">
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black opacity-50"></div>
+
+      <div className="container mx-auto px-4 max-w-[1500px] flex justify-center items-center relative">
         <div className="w-1/2 grid grid-rows-2 grid-cols-2 gap-6">
           <h2 className="text-5xl font-semibold text-white leading-[55px]">
             Why Our <br /> Service Is The Perfect Choice?
@@ -15,83 +18,38 @@ const InquiryForm = () => {
           <div>
             <h3 className="text-4xl font-semibold text-white mb-4 leading-[45px]">
               01.
-              <br /> Lorem
+              <br /> Expertise and Experience
             </h3>
             <p className="text-xl text-white">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-              placeat voluptas, magni ipsum dolore quaerat quia ipsa neque!
-              Nostrum, voluptate.
+              With over 10 years of experience, we offer in-depth market
+              knowledge and proven strategies to guide you through every step of
+              the real estate process.
             </p>
           </div>
           <div>
             <h3 className="text-4xl font-semibold text-white mb-4 leading-[45px]">
               02.
-              <br /> Lorem
+              <br /> Comprehensive Services
             </h3>
             <p className="text-xl text-white">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-              placeat voluptas, magni ipsum dolore quaerat quia ipsa neque!
-              Nostrum, voluptate.
+              From buying and selling to property management, we provide a full
+              range of services, ensuring all your real estate needs are met
+              under one roof.
             </p>
           </div>
           <div>
             <h3 className="text-4xl font-semibold text-white mb-4 leading-[45px]">
               03.
-              <br /> Lorem
+              <br /> Customer-Centric Approach
             </h3>
             <p className="text-xl text-white">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-              placeat voluptas, magni ipsum dolore quaerat quia ipsa neque!
-              Nostrum, voluptate.
+              Your needs come first. We focus on understanding your unique goals
+              and providing personalized solutions that align with your
+              expectations.
             </p>
           </div>
         </div>
         <div className="w-1/2 flex justify-center items-center">
-          {/* <div className="w-[70%] p-8 bg-white rounded-md">
-            <h2 className="text-center text-3xl font-semibold text-dark mb-6">
-              Inquiry Form
-            </h2>
-            <form>
-              <div className="mb-4">
-                <label className="block text-gray-700">Name</label>
-                <input
-                  type="text"
-                  className="mt-2 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                  placeholder="John Doe"
-                />
-              </div>
-
-              <div className="mb-4">
-                <label className="block text-gray-700">Email</label>
-                <input
-                  type="email"
-                  className="mt-2 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                  placeholder="example@domain.com"
-                />
-              </div>
-
-              <div className="mb-4">
-                <label className="block text-gray-700">Phone</label>
-                <input
-                  type="tel"
-                  className="mt-2 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                  placeholder="+1 (123) 456-0509"
-                />
-              </div>
-
-              <div className="mb-4">
-                <label className="block text-gray-700">Message</label>
-                <textarea
-                  className="mt-2 block w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                  placeholder="Please tell us your requirement"
-                ></textarea>
-              </div>
-
-              <button className="w-full bg-green-500 text-white py-2 rounded-lg font-semibold hover:bg-green-600">
-                Submit
-              </button>
-            </form>
-          </div> */}
           <Form />
         </div>
       </div>

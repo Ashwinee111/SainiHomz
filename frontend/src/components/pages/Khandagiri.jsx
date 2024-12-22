@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import PropertyCard from "../common/PropertyCard";
 import { propertyApi } from "../../Services/api";
 
+
 const { GET_PROPERTYDATA } = propertyApi;
 
 const Khandagiri = () => {
@@ -19,7 +20,6 @@ const Khandagiri = () => {
       try {
         const response = await axios.get(GET_PROPERTYDATA);
         console.log(response);
-        // Filter only apartments
         const apartments = response.data.filter(
           (property) => property.location === "Khandagiri"
         );
@@ -58,6 +58,7 @@ const Khandagiri = () => {
         </p>
         <div className="absolute inset-0 bg-black opacity-60"></div>
       </div>
+
 
       {/* Properties Grid */}
       <div className="max-w-[1500px] mx-auto px-4 py-8">
