@@ -3,8 +3,8 @@ import { FaMapMarkerAlt, FaRupeeSign, FaBed, FaBuilding } from "react-icons/fa";
 
 const FilterBar = ({ filters, setFilters, searchProperties }) => {
   const [localFilters, setLocalFilters] = useState(filters);
-  console.log(localFilters);
 
+  // Synchronize local filters with parent filters
   useEffect(() => {
     setLocalFilters(filters);
   }, [filters]);
@@ -17,6 +17,13 @@ const FilterBar = ({ filters, setFilters, searchProperties }) => {
   const handleSearch = () => {
     setFilters(localFilters);
     searchProperties();
+  };
+
+  // Dropdown state for Bedrooms
+  const [isBedroomsDropdownOpen, setIsBedroomsDropdownOpen] = useState(false);
+
+  const toggleBedroomsDropdown = () => {
+    setIsBedroomsDropdownOpen((prev) => !prev);
   };
 
   return (
@@ -72,17 +79,69 @@ const FilterBar = ({ filters, setFilters, searchProperties }) => {
         </select>
       </div>
 
-      {/* Bedrooms */}
-      <div className="w-full sm:w-1/6 flex items-center gap-2">
-        <FaBed className="text-primary" size={25} />
-        <input
-          type="number"
-          name="bedrooms"
-          placeholder="Bedrooms"
-          value={localFilters.bedrooms}
-          onChange={handleFilterChange}
-          className="p-3 border border-primary rounded-lg w-full focus:outline-none focus:ring-1 focus:ring-primary hover:border-primary transition duration-200 ease-in-out"
-        />
+      {/* Bedrooms Dropdown */}
+      <div className="w-full sm:w-1/6 relative">
+        <div
+          className="border border-primary rounded-md p-3 cursor-pointer bg-white hover:bg-gray-50 flex justify-between items-center"
+          onClick={toggleBedroomsDropdown}
+        >
+          <div className="flex items-center gap-2">
+            <FaBed className="text-primary" size={25} />
+            <span>Select Bedrooms</span>
+          </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className={`h-5 w-5 text-gray-500 transform ${
+              isBedroomsDropdownOpen ? "rotate-180" : "rotate-0"
+            } transition-transform`}
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </div>
+
+        {/* Dropdown Content */}
+        {isBedroomsDropdownOpen && (
+          <div className="absolute z-50 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg overflow-hidden">
+            <div className="p-2 flex flex-col gap-2 max-h-48 overflow-auto">
+              {[2, 3, 4, 5, 6].map((bedroom) => (
+                <label
+                  key={bedroom}
+                  className="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-gray-100 cursor-pointer"
+                >
+                  <input
+                    type="checkbox"
+                    name="bedrooms"
+                    value={bedroom}
+                    checked={
+                      localFilters.bedrooms?.includes(bedroom.toString()) ||
+                      false
+                    }
+                    onChange={(e) => {
+                      const { value, checked } = e.target;
+                      setLocalFilters((prev) => {
+                        const updatedBedrooms = prev.bedrooms || [];
+                        return {
+                          ...prev,
+                          bedrooms: checked
+                            ? [...updatedBedrooms, value]
+                            : updatedBedrooms.filter((b) => b !== value),
+                        };
+                      });
+                    }}
+                    className="w-4 h-4 text-primary rounded"
+                  />
+                  <span className="text-sm">{bedroom} Bedroom</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Min Price */}

@@ -19,7 +19,7 @@ const PropertyList = () => {
     location: "",
     min_price: "",
     max_price: "",
-    bedrooms: "",
+    bedrooms: [],
   });
 
   const propertiesPerPage = 12;
@@ -71,9 +71,10 @@ const PropertyList = () => {
         ? propertyPrice <= parseInt(filters.max_price, 10)
         : true;
 
-      const matchesBedrooms = filters.bedrooms
-        ? property.bedrooms === parseInt(filters.bedrooms, 10)
-        : true;
+      const matchesBedrooms =
+        filters.bedrooms.length > 0
+          ? filters.bedrooms.includes(property.bedrooms.toString())
+          : true;
 
       return (
         matchesType &&
@@ -104,7 +105,7 @@ const PropertyList = () => {
       {/* Header Section */}
       <div
         className="relative bg-cover bg-center h-[50vh] flex items-center justify-center flex-col text-white"
-        style={{ backgroundImage: `url(${Image1})` }} // Corrected here
+        style={{ backgroundImage: `url(${Image1})` }}
       >
         <h2 className="text-4xl md:text-6xl font-bold z-10">
           Property Listing
